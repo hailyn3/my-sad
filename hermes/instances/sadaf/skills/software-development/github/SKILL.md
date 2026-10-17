@@ -29,6 +29,7 @@ starting that workflow, the body below only routes.
 | Branch, commit, open PR, watch CI, merge | `references/pr-workflow.md` |
 | Carry an ISSUE to a verified PR (full delivery loop) | `references/issue-to-pr.md` |
 | Review someone's PR: diffs, inline comments, verdict | `references/code-review.md` |
+| Review an audit wave of open issues: uncommented selection, verification, structured comments | `references/issue-review.md` |
 | Clone/create/fork repos, remotes, releases | `references/repo-management.md` |
 
 Supporting assets: `scripts/gh-env.sh` + `scripts/git-credential-token.py`
