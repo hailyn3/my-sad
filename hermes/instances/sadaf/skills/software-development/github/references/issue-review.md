@@ -67,6 +67,37 @@ finished.
    `gh issue comment N -R OWNER/REPO --body-file /tmp/comment_N.md`
    Then verify the count is now 1.
 
+## Verifying the plan, not just the finding
+
+- Confirm the files the plan scopes actually exist: `git ls-files | grep -i
+  <fragment>`. Plans routinely cite a path that exists only inside a markdown
+  install guide or a gitignored build dir; when the path is absent, the
+  plan's mirror/byte-identity steps collapse and that becomes the headline
+  of the comment.
+- Regenerate every number the plan quotes (bytes, gzip size, bucket counts,
+  query counts). Build artifacts are usually gitignored, so rebuild before
+  accepting a size claim — the measured value is often materially different.
+- Treat the plan's **proposed replacement** as a claim too. A correct finding
+  can come with a wrong fix (a grouped+window rewrite that silently drops rows
+  older than the generated window; a header/caching directive that discards
+  inherited headers). Prove equivalence on boundary fixtures before endorsing
+  it and put the corrected statement in the comment. Recipes:
+  `references/verify-plan-claims.md`.
+- Resolve STOP conditions the code can answer (nullability, `dir` attribute,
+  which cascade layer wins) and say how; leave only genuine owner decisions
+  for section 5.
+- Match severity to the deployment frame. An audit measured on a dev database,
+  with nothing deployed and no client app shipped, has no live-user impact: say
+  that instead of repeating "every user downloads X". Where the real value is
+  availability or consistency (external CDN on an intranet, two font families
+  in one UI), name that instead.
+- When issues in the wave are linked, open the linked issue and read its
+  actual scope list before claiming file overlap; linked issues often touch a
+  different file than their title suggests.
+- State your own mechanical proofs inline (measured series, header dumps,
+  computed font-family) — a review that asserts without a reproducible command
+  is worth less than one that shows the command and its output.
+
 ## Comment template (Persian; technical terms, file names, test names in English)
 
 ```
@@ -116,6 +147,12 @@ Sections 2-6 are required only when the finding holds.
 - A comment appearing between your review and your post is expected in a
   multi-agent queue. Skip cleanly; do not retry or overwrite.
 - Issue bodies can contain a complete implementation plan. Read it, then verify
-  each claim independently; a plan is a claim, not authority.
+  each claim independently; a plan is a claim, not authority — this applies to
+  its proposed fix as much as to its diagnosis.
+- Say "none of the existing tests will break" only alongside the reason that
+  matters: the suite is then unable to catch the regression. Name the test that
+  looks like a guard but asserts only shape or length, not the value.
+- Long Persian bodies must be written to a file and posted with `--body-file`;
+  shell here-docs corrupt RTL text, list markers, and fenced SQL.
 - For "already fixed / duplicate" findings, section 1 alone is sufficient;
   do not pad with speculative sections.
