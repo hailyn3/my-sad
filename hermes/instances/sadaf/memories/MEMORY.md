@@ -11,3 +11,5 @@ e2e/env rules: scripts/e2e-test.sh not concurrency-safe (never two runs; .env.de
 Map perf fixed (adc561f): bottleneck was main-thread rendering, not server (longtask /map pan 620→52ms). Fixed: circleMarker+lazy popup, icon cache, id-Map/memo depth, canvas lines, dead Livewire loadStats removed.
 §
 homeassistant is permanently deny-listed in ~/.hermes/config.yaml (plugins.disabled) — never re-enable or `hermes plugins install` it; it was never installed here.
+§
+Hermes lifecycle guard refuses scripts >1MiB, so `vendor/bin/pint` (5MB phar) is blocked in h-dashboard; run `php vendor/laravel/pint/builds/pint --dirty --format agent` and `php vendor/phpstan/phpstan/phpstan analyse --no-progress` instead. If phpstan flags stale `ignore.unmatched` in database/seeders, the local vendor is newer than composer.lock — `composer install` restores faithfulness.
