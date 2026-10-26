@@ -1,13 +1,7 @@
 {
-  "updated_at": "2026-10-25T23:25:08.607028",
+  "updated_at": "2026-10-26T16:28:17.212287",
   "platforms": {
     "telegram": [
-      {
-        "id": "-1004376120571",
-        "name": "گروه تیم",
-        "type": "group",
-        "thread_id": null
-      },
       {
         "id": "100651143",
         "name": "M A",
